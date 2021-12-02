@@ -1,7 +1,21 @@
+<form method="post" action="check.php" >
+Search: <input type="text" name="input">
+<input type="hidden" name="check" value="1">
+<input type="submit" value="Search">
+</form>
+
 <?php
+session_start();
 
-echo "Hello, World from Kubernetes! <br>";
-echo "Hello Jenkins X! <br>";
-echo '<img border="0" src="https://jenkins-x.io/images/logo.png" width="300" height="300" />';
+if (isset($_POST["check"])) {
+  if (preg_match('/\<script\>.*\<\/script\>;/', $_POST['input'])) {
+		header("Location: index.php");
+		die();
+	}
 
+	else{
+		$_SESSION['input'] = $_POST['input'];
+		header("Location: display.php");
+	}
+}
 ?>
